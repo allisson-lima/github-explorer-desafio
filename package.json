@@ -11,14 +11,20 @@
     "lint:fix": "eslint . --fix",
     "prettier:format": "prettier --write \"**/*.{ts,tsx,json}\"",
     "prettier:check": "prettier --check \"**/*.{ts,tsx,json}\"",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "pre-commit": "lint-staged",
-    "pre-push": "npm run prettier:check && npm run build",
+    "pre-push": "npm run prettier:check && npm run test:run && npm run build",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write"
+    ],
+    "*.{test,spec}.{ts,tsx}": [
+      "vitest related --run"
     ],
     "*.json": [
       "prettier --write"
@@ -42,10 +48,15 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@tailwindcss/vite": "^4.3.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.9.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.8",
+    "axios-mock-adapter": "^2.1.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
@@ -53,11 +64,13 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
+    "jsdom": "^27.0.1",
     "lint-staged": "^17.0.7",
     "prettier": "^3.8.3",
     "tailwindcss": "^4.3.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.60.1",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "vitest": "^4.1.8"
   }
 }
