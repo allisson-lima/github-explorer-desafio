@@ -26,7 +26,7 @@ export function Header() {
           </div>
 
           <span className="ml-auto hidden shrink-0 text-sm text-github-muted lg:block">
-            Desbravador Challenge
+            Desbravador Desafio
           </span>
         </div>
 
