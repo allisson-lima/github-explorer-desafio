@@ -59,6 +59,7 @@ O GitHub Explorer permite buscar um usuário do GitHub, visualizar seu perfil e 
 | [Zustand](https://zustand.docs.pmnd.rs/) | Histórico de buscas recentes |
 | [Tailwind CSS v4](https://tailwindcss.com/) | Estilização responsiva |
 | [Lucide React](https://lucide.dev/) | Ícones |
+| [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/) | Testes unitários e de componentes |
 | ESLint + Prettier + Husky + lint-staged | Qualidade e padronização de código |
 
 ---
@@ -83,7 +84,11 @@ src/
 ├── services/         # Axios e integração com GitHub API
 ├── stores/           # Zustand stores
 ├── types/            # Tipos TypeScript
-└── utils/            # Funções auxiliares
+├── utils/            # Funções auxiliares
+└── test/             # Setup Vitest, helpers de render e mocks
+    ├── setup.ts
+    ├── test-utils.tsx
+    └── mocks/
 ```
 
 ---
@@ -145,6 +150,44 @@ npm run preview
 
 ---
 
+## Testes
+
+A suíte usa **Vitest** + **Testing Library**, organizada em camadas:
+
+| Camada | Escopo | Exemplos |
+| --- | --- | --- |
+| Unitários | Funções puras e validação | `filterRepos`, `sortRepos`, `searchSchema`, `getApiErrorDetails` |
+| Store / Service | Estado e integração API | `search-store`, `github-service`, interceptors Axios |
+| Componentes | UI e fluxos do usuário | `SearchForm`, `UserProfile`, `RepoList`, `UserPage` |
+
+### Executar testes
+
+```bash
+npm test              # watch (desenvolvimento)
+npm run test:run      # execução única
+npm run test:coverage # com cobertura
+```
+
+### Escopo coberto
+
+| Funcionalidade | O que é testado |
+| --- | --- |
+| Busca de usuário | Validação Zod, submit, navegação, buscas recentes |
+| Perfil do usuário | Renderização de avatar, bio, stats e fallbacks |
+| Listagem de repositórios | Filtro local, ordenação, paginação, estados vazios |
+| Detalhes do repositório | Nome, descrição, link externo |
+| Erros da API | Mapeamento 404/403 para mensagens amigáveis |
+| Buscas recentes | Persistência, deduplicação, limite de 5 itens |
+
+### Qualidade no Git (Husky)
+
+| Hook | Verificação |
+| --- | --- |
+| `pre-commit` | ESLint + Prettier nos arquivos staged; `vitest related` em arquivos de teste alterados |
+| `pre-push` | Prettier check → suite completa de testes → build de produção |
+
+---
+
 ## Scripts disponíveis
 
 | Script | Descrição |
@@ -156,6 +199,9 @@ npm run preview
 | `npm run lint:fix` | Corrige problemas do ESLint automaticamente |
 | `npm run prettier:format` | Formata os arquivos com Prettier |
 | `npm run prettier:check` | Verifica a formatação dos arquivos |
+| `npm test` | Executa testes em modo watch |
+| `npm run test:run` | Executa todos os testes uma vez (CI / pre-push) |
+| `npm run test:coverage` | Executa testes com relatório de cobertura |
 
 ---
 
@@ -214,7 +260,8 @@ Também é compatível com [Netlify](https://netlify.com) via `public/_redirects
 - **Zod na camada de service:** valida o contrato das respostas da API antes de chegar à UI
 - **nuqs:** mantém ordenação, paginação e busca na URL - links compartilháveis e estado persistente ao recarregar
 - **Tratamento de erros tipado:** exibe status HTTP (404, 403...) e mensagem retornada pela API do GitHub
-- **Husky + lint-staged:** garante padronização de código antes de cada commit
+- **Vitest + Testing Library:** runner nativo ao Vite; testes focados no comportamento do usuário, não em implementação interna
+- **Husky + lint-staged:** garante padronização de código no commit e executa a suíte completa de testes no push
 
 ---
 
