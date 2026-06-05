@@ -1,0 +1,2 @@
+echo 'Running pre-push checks and build...'
+npm run pre-push || (echo 'Pre-push checks failed. Please fix them before pushing.' && exit 1)

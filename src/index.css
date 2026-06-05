@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-github-dark: #0d1117;
+  --color-github-border: #30363d;
+  --color-github-muted: #8b949e;
+  --color-github-accent: #238636;
+  --color-github-blue: #58a6ff;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-github-border;
+  }
+
+  body {
+    @apply bg-github-dark text-white antialiased;
+    font-family: var(--font-sans);
+  }
+}
