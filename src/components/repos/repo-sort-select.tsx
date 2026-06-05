@@ -1,4 +1,4 @@
-import { parseAsStringEnum, useQueryState } from 'nuqs';
+import { parseAsInteger, parseAsStringEnum, useQueryState } from 'nuqs';
 import { Select } from '@/components/ui/select';
 import type { RepoSortField, SortOrder } from '@/types/repo';
 
@@ -15,6 +15,8 @@ const orderOptions: { value: SortOrder; label: string }[] = [
 ];
 
 export function RepoSortSelect() {
+  const [, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
+
   const [sort, setSort] = useQueryState(
     'sort',
     parseAsStringEnum<RepoSortField>([
@@ -30,6 +32,16 @@ export function RepoSortSelect() {
     parseAsStringEnum<SortOrder>(['asc', 'desc']).withDefault('desc'),
   );
 
+  const handleSortChange = (value: RepoSortField) => {
+    void setSort(value);
+    void setPage(1);
+  };
+
+  const handleOrderChange = (value: SortOrder) => {
+    void setOrder(value);
+    void setPage(1);
+  };
+
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <label className="text-sm text-github-muted" htmlFor="sort-field">
@@ -38,7 +50,9 @@ export function RepoSortSelect() {
       <Select
         id="sort-field"
         value={sort}
-        onChange={(event) => setSort(event.target.value as RepoSortField)}
+        onChange={(event) =>
+          handleSortChange(event.target.value as RepoSortField)
+        }
         aria-label="Campo de ordenação"
       >
         {sortOptions.map((option) => (
@@ -51,7 +65,7 @@ export function RepoSortSelect() {
       <Select
         id="sort-order"
         value={order}
-        onChange={(event) => setOrder(event.target.value as SortOrder)}
+        onChange={(event) => handleOrderChange(event.target.value as SortOrder)}
         aria-label="Ordem de classificação"
       >
         {orderOptions.map((option) => (

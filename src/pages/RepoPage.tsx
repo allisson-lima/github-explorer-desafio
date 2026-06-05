@@ -5,11 +5,12 @@ import { ErrorState } from '@/components/ui/error-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { useGitHubRepo } from '@/hooks/use-github-repo';
-import { getErrorMessage } from '@/utils/sort-repos';
+import { getApiErrorDetails } from '@/utils/get-api-error';
 
 export function RepoPage() {
   const { owner = '', repoName = '' } = useParams();
   const { data, isLoading, error } = useGitHubRepo(owner, repoName);
+  const errorDetails = error ? getApiErrorDetails(error) : null;
 
   return (
     <PageContainer className="max-w-3xl">
@@ -20,9 +21,14 @@ export function RepoPage() {
         </div>
       )}
 
-      {!isLoading && error && (
+      {!isLoading && errorDetails && (
         <div className="space-y-4">
-          <ErrorState message={getErrorMessage(error)} />
+          <ErrorState
+            title={errorDetails.title}
+            message={errorDetails.message}
+            statusCode={errorDetails.statusCode}
+            apiMessage={errorDetails.apiMessage}
+          />
           <Link to={owner ? `/user/${owner}` : '/'}>
             <Button variant="secondary">Voltar</Button>
           </Link>

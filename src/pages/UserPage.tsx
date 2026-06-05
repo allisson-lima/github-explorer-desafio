@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useGitHubUser } from '@/hooks/use-github-user';
 import { useGitHubRepos } from '@/hooks/use-github-repos';
 import { useSearchStore } from '@/stores/search-store';
-import { getErrorMessage } from '@/utils/sort-repos';
+import { getApiErrorDetails } from '@/utils/get-api-error';
 
 export function UserPage() {
   const { username = '' } = useParams();
@@ -27,6 +27,7 @@ export function UserPage() {
 
   const isLoading = userQuery.isLoading || reposQuery.isLoading;
   const error = userQuery.error ?? reposQuery.error;
+  const errorDetails = error ? getApiErrorDetails(error) : null;
 
   return (
     <PageContainer>
@@ -43,9 +44,14 @@ export function UserPage() {
         </div>
       )}
 
-      {!isLoading && error && (
+      {!isLoading && errorDetails && (
         <div className="mx-auto max-w-xl space-y-4">
-          <ErrorState message={getErrorMessage(error)} />
+          <ErrorState
+            title={errorDetails.title}
+            message={errorDetails.message}
+            statusCode={errorDetails.statusCode}
+            apiMessage={errorDetails.apiMessage}
+          />
           <Link to="/">
             <Button variant="secondary">Voltar para busca</Button>
           </Link>
