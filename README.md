@@ -8,12 +8,9 @@ Aplicação client-side para explorar usuários e repositórios do GitHub, desen
 
 **Repositório:** [https://github.com/allisson-lima/github-explorer-desafio](https://github.com/allisson-lima/github-explorer-desafio)
 
-### Demonstração em vídeo
+### Demonstração
 
-<video src="https://raw.githubusercontent.com/allisson-lima/github-explorer-desafio/main/src/assets/demo.mp4" controls width="100%">
-  Seu navegador não suporta a reprodução de vídeo.
-  [Assistir demo](./src/assets/demo.mp4)
-</video>
+![Demonstração do GitHub Explorer](./public/demo.gif)
 
 ---
 
