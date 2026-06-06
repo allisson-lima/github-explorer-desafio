@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import {
   parseAsInteger,
   parseAsString,
@@ -72,10 +72,13 @@ export function useRepoListState(repos: GitHubRepo[]) {
     void setPage(1);
   };
 
-  const handleSearchChange = (value: string) => {
-    void setSearch(value || null);
-    resetPage();
-  };
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      void setSearch(value || null);
+      resetPage();
+    },
+    [setSearch],
+  );
 
   const handlePerPageChange = (value: number) => {
     void setPerPage(normalizeRepoPerPage(value));

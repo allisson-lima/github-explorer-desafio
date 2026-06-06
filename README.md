@@ -4,9 +4,16 @@ Aplicação client-side para explorar usuários e repositórios do GitHub, desen
 
 ## Demo
 
-**Aplicação publicada:** [https://github-explorer-allisson.vercel.app](https://github-explorer-allisson.vercel.app)
+**Aplicação publicada:** [https://github-explorer-desafio.vercel.app](https://github-explorer-desafio.vercel.app)
 
-**Repositório:** [https://github.com/allisson-lima/GitHub-Explorer](https://github.com/allisson-lima/GitHub-Explorer)
+**Repositório:** [https://github.com/allisson-lima/github-explorer-desafio](https://github.com/allisson-lima/github-explorer-desafio)
+
+### Demonstração em vídeo
+
+<video src="https://raw.githubusercontent.com/allisson-lima/github-explorer-desafio/main/src/assets/demo.mp4" controls width="100%">
+  Seu navegador não suporta a reprodução de vídeo.
+  [Assistir demo](./src/assets/demo.mp4)
+</video>
 
 ---
 
@@ -105,8 +112,8 @@ src/
 Clone o repositório e instale as dependências:
 
 ```bash
-git clone https://github.com/allisson-lima/GitHub-Explorer.git
-cd GitHub-Explorer
+git clone https://github.com/allisson-lima/github-explorer-desafio.git
+cd github-explorer-desafio
 npm install
 ```
 
