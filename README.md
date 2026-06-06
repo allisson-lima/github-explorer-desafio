@@ -10,7 +10,9 @@ Aplicação client-side para explorar usuários e repositórios do GitHub, desen
 
 ### Demonstração
 
-![Demonstração do GitHub Explorer](./public/demo.gif)
+<p align="center">
+  <img src="./public/demo.gif" alt="Demonstração do GitHub Explorer" width="100%" />
+</p>
 
 ---
 
