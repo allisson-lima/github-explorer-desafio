@@ -203,10 +203,25 @@ npm run test:coverage # com cobertura
 
 ### Qualidade no Git (Husky)
 
+Os hooks são configurados automaticamente ao rodar `npm install` (script `prepare` → `husky`). Não é necessário nenhum comando extra após o clone.
+
 | Hook | Verificação |
 | --- | --- |
 | `pre-commit` | ESLint + Prettier nos arquivos staged; `vitest related` em arquivos de teste alterados |
 | `pre-push` | Prettier check → suite completa de testes → build de produção |
+
+Se os hooks não estiverem ativos após a instalação (ex.: clone sem `npm install`), reconfigure com:
+
+```bash
+npm run prepare
+```
+
+Para pular os hooks em um commit ou push pontual:
+
+```bash
+git commit -m "mensagem" --no-verify
+git push --no-verify
+```
 
 ### CI (GitHub Actions)
 
