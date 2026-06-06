@@ -1,5 +1,7 @@
 # GitHub Explorer
 
+![CI](https://github.com/allisson-lima/github-explorer-desafio/actions/workflows/ci.yml/badge.svg)
+
 Aplicação client-side para explorar usuários e repositórios do GitHub, desenvolvida como solução do desafio técnico Front-End da [Desbravador Software](https://github.com/DesbravadorSoftware/desafioFront).
 
 ## Demo
@@ -13,6 +15,20 @@ Aplicação client-side para explorar usuários e repositórios do GitHub, desen
 <p align="center">
   <img src="./public/demo.gif" alt="Demonstração do GitHub Explorer" width="100%" />
 </p>
+
+---
+
+## Roteiro para o avaliador
+
+Sugestão de fluxo para validar os requisitos do desafio em poucos minutos:
+
+1. **Buscar usuário** — na página inicial, pesquise por `octocat` e confirme a navegação para `/user/octocat`
+2. **Ver perfil** — confira avatar, bio, seguidores, seguindo e e-mail (ou fallback quando não informado)
+3. **Listar repositórios** — verifique a listagem ordenada por estrelas (decrescente) por padrão
+4. **Alterar ordenação** — troque o campo e a direção; a URL deve atualizar (ex.: `?sort=name&order=asc`)
+5. **Filtrar repositórios** — use a busca local para filtrar por nome, descrição ou linguagem
+6. **Abrir detalhes** — clique em um repositório e confira nome, descrição, estrelas, linguagem e link "Ver no GitHub"
+7. **Tratar erros** — busque um usuário inexistente (ex.: `usuario-que-nao-existe-xyz`) e confirme a mensagem de erro 404
 
 ---
 
@@ -164,7 +180,7 @@ A suíte usa **Vitest** + **Testing Library**, organizada em camadas:
 | --- | --- | --- |
 | Unitários | Funções puras e validação | `filterRepos`, `sortRepos`, `searchSchema`, `getApiErrorDetails` |
 | Store / Service | Estado e integração API | `search-store`, `github-service`, interceptors Axios |
-| Componentes | UI e fluxos do usuário | `SearchForm`, `UserProfile`, `RepoList`, `UserPage` |
+| Componentes | UI e fluxos do usuário | `SearchForm`, `UserProfile`, `RepoList`, `UserPage`, `HomePage`, `RepoPage`, `NotFoundPage` |
 
 ### Executar testes
 
@@ -264,6 +280,16 @@ O projeto está configurado para deploy na [Vercel](https://vercel.com):
 - **Build command:** `npm run build`
 - **Output directory:** `dist`
 - **SPA rewrite:** configurado em `vercel.json`
+
+### Variável de ambiente na Vercel (recomendado)
+
+Para evitar rate limit da API do GitHub durante a avaliação (especialmente com usuários que possuem muitos repositórios):
+
+1. Acesse o projeto na [Vercel Dashboard](https://vercel.com/dashboard)
+2. Vá em **Settings → Environment Variables**
+3. Adicione `VITE_GITHUB_TOKEN` com um [Personal Access Token](https://github.com/settings/tokens) (nenhum escopo é necessário para dados públicos)
+4. Marque os ambientes **Production**, **Preview** e **Development**
+5. Faça um **Redeploy** para aplicar a variável
 
 Também é compatível com [Netlify](https://netlify.com) via `public/_redirects`.
 
