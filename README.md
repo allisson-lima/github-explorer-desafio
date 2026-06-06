@@ -186,6 +186,17 @@ npm run test:coverage # com cobertura
 | `pre-commit` | ESLint + Prettier nos arquivos staged; `vitest related` em arquivos de teste alterados |
 | `pre-push` | Prettier check → suite completa de testes → build de produção |
 
+### CI (GitHub Actions)
+
+Na branch `main`, o workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) executa automaticamente em **push** e **pull requests**:
+
+| Etapa | Comando |
+| --- | --- |
+| Lint | `npm run lint` |
+| Formatação | `npm run prettier:check` |
+| Testes | `npm run test:run` |
+| Build | `npm run build` |
+
 ---
 
 ## Scripts disponíveis
@@ -262,6 +273,7 @@ Também é compatível com [Netlify](https://netlify.com) via `public/_redirects
 - **Tratamento de erros tipado:** exibe status HTTP (404, 403...) e mensagem retornada pela API do GitHub
 - **Vitest + Testing Library:** runner nativo ao Vite; testes focados no comportamento do usuário, não em implementação interna
 - **Husky + lint-staged:** garante padronização de código no commit e executa a suíte completa de testes no push
+- **GitHub Actions:** valida lint, formatação, testes e build na branch `main` a cada push ou PR
 
 ---
 
